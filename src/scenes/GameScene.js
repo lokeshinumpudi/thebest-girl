@@ -68,8 +68,12 @@ export default class GameScene extends Phaser.Scene {
   
   // Method to handle dialogue choices
   handleChoice(choice) {
-    // Play click sound
-    this.sound.play('click');
+    // Try to play click sound, but don't fail if it doesn't work
+    try {
+      this.sound.play('click');
+    } catch (error) {
+      console.warn('Could not play click sound:', error);
+    }
     
     // Store the choice
     window.gameData.dialogueChoices.push({
@@ -101,7 +105,13 @@ export default class GameScene extends Phaser.Scene {
         // Show flower surprise
         this.surprises.flower.setVisible(true);
         this.surprises.flower.setScale(0);
-        this.sound.play('surprise');
+        
+        // Try to play surprise sound, but don't fail if it doesn't work
+        try {
+          this.sound.play('surprise');
+        } catch (error) {
+          console.warn('Could not play surprise sound:', error);
+        }
         
         this.tweens.add({
           targets: this.surprises.flower,

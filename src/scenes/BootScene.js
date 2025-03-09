@@ -6,8 +6,7 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    // Load minimal assets needed for the loading screen
-    this.load.svg('heart', '/heart.svg');
+    // No need to load assets here, we'll create them in the scene
   }
 
   create() {

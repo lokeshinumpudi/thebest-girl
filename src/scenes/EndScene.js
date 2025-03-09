@@ -11,6 +11,15 @@ export default class EndScene extends Phaser.Scene {
     background.fillGradientStyle(0xfce2e6, 0xfce2e6, 0xe6f3ff, 0xe6f3ff, 1);
     background.fillRect(0, 0, 800, 600);
     
+    // Create heart shapes
+    const heart1 = this.add.graphics();
+    heart1.fillStyle(0xff6b81, 0.7);
+    this.drawHeart(heart1, 300, 450, 25);
+    
+    const heart2 = this.add.graphics();
+    heart2.fillStyle(0xff6b81, 0.7);
+    this.drawHeart(heart2, 500, 450, 25);
+    
     // Add heart particles
     this.createHeartParticles();
     
@@ -32,10 +41,6 @@ export default class EndScene extends Phaser.Scene {
       color: '#ff6b81',
       fontStyle: 'italic'
     }).setOrigin(0.5);
-    
-    // Add decorative hearts
-    const heart1 = this.add.image(300, 450, 'heart').setDisplaySize(50, 50);
-    const heart2 = this.add.image(500, 450, 'heart').setDisplaySize(50, 50);
     
     // Add restart button
     const restartButton = this.add.image(400, 520, 'button').setDisplaySize(200, 60);
@@ -67,8 +72,12 @@ export default class EndScene extends Phaser.Scene {
     
     // Restart game on button release
     restartButton.on('pointerup', () => {
-      // Play click sound
-      this.sound.play('click');
+      // Try to play click sound, but don't fail if it doesn't work
+      try {
+        this.sound.play('click');
+      } catch (error) {
+        console.warn('Could not play click sound:', error);
+      }
       
       // Reset game data
       window.gameData.dialogueChoices = [];
@@ -103,33 +112,36 @@ export default class EndScene extends Phaser.Scene {
     this.cameras.main.fadeIn(1000);
   }
   
+  // Helper method to draw a heart shape
+  drawHeart(graphics, x, y, size) {
+    graphics.beginPath();
+    graphics.arc(x - size/2, y - size/2, size, 0, Math.PI, true);
+    graphics.arc(x + size/2, y - size/2, size, 0, Math.PI, true);
+    graphics.lineTo(x, y + size);
+    graphics.closePath();
+    graphics.fillPath();
+  }
+  
   createHeartParticles() {
-    // Create heart particle texture
-    const canvas = document.createElement('canvas');
-    canvas.width = 20;
-    canvas.height = 20;
-    const ctx = canvas.getContext('2d');
-    
-    ctx.fillStyle = '#ff6b81';
-    ctx.beginPath();
-    ctx.arc(10, 10, 5, 0, Math.PI * 2);
-    ctx.fill();
-    
-    const dataURL = canvas.toDataURL();
-    this.textures.addBase64('heart-particle', dataURL);
-    
-    // Create particle emitter
-    const particles = this.add.particles('heart-particle');
-    
-    particles.createEmitter({
-      x: { min: 0, max: 800 },
-      y: -10,
-      speedY: { min: 20, max: 50 },
-      speedX: { min: -10, max: 10 },
-      scale: { start: 0.5, end: 0 },
-      lifespan: 10000,
+    // Create a simple circle particle
+    const particles = this.add.particles(0, 0, 'button', {
+      frame: 0,
+      color: [ 0xff6b81 ],
+      colorEase: 'quad.out',
+      lifespan: 2000,
+      scale: { start: 0.1, end: 0 },
+      speed: { min: 50, max: 100 },
+      advance: 2000,
+      blendMode: 'ADD',
       frequency: 500,
-      blendMode: 'ADD'
+      emitZone: {
+        type: 'random',
+        source: new Phaser.Geom.Rectangle(0, 0, 800, 1),
+        quantity: 10
+      }
     });
+    
+    // Position the emitter at the top of the screen
+    particles.setPosition(400, 0);
   }
 } 

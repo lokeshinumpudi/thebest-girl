@@ -28,26 +28,17 @@ export default class TitleScene extends Phaser.Scene {
       strokeThickness: 4
     }).setOrigin(0.5);
     
-    // Create heart image
-    const heartGraphics = this.add.graphics();
-    heartGraphics.fillStyle(0xff6b81, 1);
+    // Create a simple heart shape using graphics
+    const heart = this.add.graphics();
+    heart.fillStyle(0xff6b81, 1);
     
-    // Draw heart shape
-    heartGraphics.beginPath();
-    heartGraphics.moveTo(400, 320);
-    heartGraphics.bezierCurveTo(400, 300, 350, 280, 350, 320);
-    heartGraphics.bezierCurveTo(350, 360, 400, 380, 400, 340);
-    heartGraphics.bezierCurveTo(400, 380, 450, 360, 450, 320);
-    heartGraphics.bezierCurveTo(450, 280, 400, 300, 400, 320);
-    heartGraphics.closePath();
-    heartGraphics.fillPath();
-    
-    // Create texture from graphics
-    heartGraphics.generateTexture('heart-shape', 100, 100);
-    heartGraphics.clear();
-    
-    // Add heart using the generated texture
-    const heart = this.add.image(400, 300, 'heart-shape').setDisplaySize(100, 100);
+    // Draw a simple heart shape
+    heart.beginPath();
+    heart.arc(380, 280, 30, 0, Math.PI, true);
+    heart.arc(420, 280, 30, 0, Math.PI, true);
+    heart.lineTo(400, 340);
+    heart.closePath();
+    heart.fillPath();
     
     // Add start button
     const startButton = this.add.image(400, 450, 'button').setDisplaySize(200, 60);
@@ -79,8 +70,12 @@ export default class TitleScene extends Phaser.Scene {
     
     // Start game on button release
     startButton.on('pointerup', () => {
-      // Play click sound
-      this.sound.play('click');
+      // Try to play click sound, but don't fail if it doesn't work
+      try {
+        this.sound.play('click');
+      } catch (error) {
+        console.warn('Could not play click sound:', error);
+      }
       
       // Transition to game scene
       this.cameras.main.fadeOut(500, 255, 255, 255);
@@ -112,13 +107,17 @@ export default class TitleScene extends Phaser.Scene {
     // Fade in
     this.cameras.main.fadeIn(1000, 255, 255, 255);
     
-    // Start background music
-    if (!this.sound.get('bg-music')) {
-      const music = this.sound.add('bg-music', {
-        volume: 0.5,
-        loop: true
-      });
-      music.play();
+    // Try to start background music, but don't fail if it doesn't work
+    try {
+      if (!this.sound.get('bg-music')) {
+        const music = this.sound.add('bg-music', {
+          volume: 0.5,
+          loop: true
+        });
+        music.play();
+      }
+    } catch (error) {
+      console.warn('Could not play background music:', error);
     }
   }
 } 
