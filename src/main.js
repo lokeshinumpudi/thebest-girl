@@ -1,10 +1,10 @@
 import './style.css'
 import Phaser from 'phaser'
-import BootScene from './scenes/BootScene'
-import PreloadScene from './scenes/PreloadScene'
-import TitleScene from './scenes/TitleScene'
-import GameScene from './scenes/GameScene'
-import EndScene from './scenes/EndScene'
+import BootScene from './scenes/BootScene.js'
+import PreloadScene from './scenes/PreloadScene.js'
+import TitleScene from './scenes/TitleScene.js'
+import GameScene from './scenes/GameScene.js'
+import EndScene from './scenes/EndScene.js'
 
 // Game configuration
 const config = {

@@ -28,8 +28,26 @@ export default class TitleScene extends Phaser.Scene {
       strokeThickness: 4
     }).setOrigin(0.5);
     
-    // Add decorative heart
-    const heart = this.add.image(400, 300, 'heart').setDisplaySize(100, 100);
+    // Create heart image
+    const heartGraphics = this.add.graphics();
+    heartGraphics.fillStyle(0xff6b81, 1);
+    
+    // Draw heart shape
+    heartGraphics.beginPath();
+    heartGraphics.moveTo(400, 320);
+    heartGraphics.bezierCurveTo(400, 300, 350, 280, 350, 320);
+    heartGraphics.bezierCurveTo(350, 360, 400, 380, 400, 340);
+    heartGraphics.bezierCurveTo(400, 380, 450, 360, 450, 320);
+    heartGraphics.bezierCurveTo(450, 280, 400, 300, 400, 320);
+    heartGraphics.closePath();
+    heartGraphics.fillPath();
+    
+    // Create texture from graphics
+    heartGraphics.generateTexture('heart-shape', 100, 100);
+    heartGraphics.clear();
+    
+    // Add heart using the generated texture
+    const heart = this.add.image(400, 300, 'heart-shape').setDisplaySize(100, 100);
     
     // Add start button
     const startButton = this.add.image(400, 450, 'button').setDisplaySize(200, 60);
