@@ -42,12 +42,88 @@ export class DialogueManager {
       flower: {
         text: `I brought you something—a ${favoriteFlower}.`,
         choices: [
-          { text: "Thank you!", next: "fountain" },
-          { text: "It's beautiful", next: "fountain" }
+          { text: "Thank you!", next: "dharamshala_memory" },
+          { text: "It's beautiful", next: "dharamshala_memory" }
+        ]
+      },
+      dharamshala_memory: {
+        text: `Do you remember my late evening walks through Dharamshala lawn talking to you in the evenings? Feeling that cool breeze, talking for hours...`,
+        choices: [
+          { text: "I remember", next: "loki_letter" },
+          { text: "Tell me more", next: "loki_letter" }
+        ]
+      },
+      loki_letter: {
+        text: `There's something about you that's so raw and pure, which is a rarity! From the moment we started spending more time together, sharing stories, talking about random things... I started getting closer to you, only wanting more of you.`,
+        choices: [
+          { text: "Continue", next: "loki_letter_2" }
+        ]
+      },
+      loki_letter_2: {
+        text: `I felt this new feeling that was quite hard to shake and contain within myself. I started writing them as letters to you! You gorgeous gorgeous soul!`,
+        choices: [
+          { text: "That's so sweet", next: "loki_letter_3" }
+        ]
+      },
+      loki_letter_3: {
+        text: `When you asked me back if I wanted to date you? I wanted to scream yes, squeeze you tight, lift you up into my arms and whisper slowly in your ears... hey girlfriend!`,
+        choices: [
+          { text: "I remember that day", next: "spotify_link" }
+        ]
+      },
+      spotify_link: {
+        text: `I even sent you a song: https://open.spotify.com/track/1wtOxkiel43cVs0Yux5Q4h?si=iLVyvtJhRHeyIGwdds5XWg`,
+        choices: [
+          { text: "I loved that song", next: "airport_memory" },
+          { text: "Let's listen to it again", next: "airport_memory" }
+        ]
+      },
+      airport_memory: {
+        text: `Remember our first date at the airport? That was such a special day.`,
+        choices: [
+          { text: "I remember", next: "airport_scene" },
+          { text: "Tell me more", next: "airport_scene" }
+        ]
+      },
+      airport_scene: {
+        text: `Let's go back there for a moment. I want to relive that special time with you.`,
+        choices: [
+          { text: "I'd love that", next: "car_ride" }
+        ]
+      },
+      car_ride: {
+        text: `*You both get in the car and drive to the airport*`,
+        choices: [
+          { text: "Continue", next: "at_airport" }
+        ]
+      },
+      at_airport: {
+        text: `Here we are. I remember how nervous I was that day. But seeing your smile made everything perfect.`,
+        choices: [
+          { text: "It was a wonderful day", next: "airport_moment" },
+          { text: "You were so cute", next: "airport_moment" }
+        ]
+      },
+      airport_moment: {
+        text: `We watched the planes take off, dreaming about all the places we'd visit together someday.`,
+        choices: [
+          { text: "I still want that", next: "airport_promise" }
+        ]
+      },
+      airport_promise: {
+        text: `I promise we'll make those dreams come true. Let's plan our next adventure together.`,
+        choices: [
+          { text: "I'd love that", next: "return_garden" }
+        ]
+      },
+      return_garden: {
+        text: `*You both return to the garden, feeling closer*`,
+        choices: [
+          { text: "Continue", next: "fountain" }
         ]
       },
       fountain: {
-        text: `Remember ${sharedMemory}? I want that again—with you.`,
+        text: `Being with you makes everything better.`,
         choices: [
           { text: "I'd like that too", next: "task" },
           { text: "Tell me more", next: "memory" }
@@ -76,7 +152,7 @@ export class DialogueManager {
         ]
       },
       final: {
-        text: `${playerName}, I promise to be better. To listen more, to understand you, and to always be there for you.`,
+        text: `${playerName}, I promise to be better. To listen more, to understand you, and to always be there for you. Hey girlfriend!`,
         choices: [
           { text: "I believe you", next: "end" },
           { text: "Let's try again", next: "end" }

@@ -6,17 +6,22 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create() {
-    // Add background
-    this.add.image(400, 300, 'title-bg').setDisplaySize(800, 600);
+    // Add background with soft gradient
+    const background = this.add.graphics();
+    background.fillGradientStyle(0xfce2e6, 0xfce2e6, 0xe6f3ff, 0xe6f3ff, 1);
+    background.fillRect(0, 0, 800, 600);
     
-    // Add title text
+    // Add decorative elements
+    this.addDecorativeElements();
+    
+    // Add title text with soft shadow
     const titleText = this.add.text(400, 150, 'A Heartfelt Apology', {
       fontFamily: 'Arial',
       fontSize: '48px',
       color: '#ff6b81',
       stroke: '#ffffff',
-      strokeThickness: 6,
-      shadow: { offsetX: 2, offsetY: 2, color: '#000000', blur: 5, stroke: true, fill: true }
+      strokeThickness: 2,
+      shadow: { offsetX: 2, offsetY: 2, color: 'rgba(0,0,0,0.3)', blur: 5, stroke: true, fill: true }
     }).setOrigin(0.5);
     
     // Add subtitle
@@ -25,10 +30,10 @@ export default class TitleScene extends Phaser.Scene {
       fontSize: '32px',
       color: '#ff6b81',
       stroke: '#ffffff',
-      strokeThickness: 4
+      strokeThickness: 1
     }).setOrigin(0.5);
     
-    // Create a simple heart shape using graphics
+    // Create heart shape
     const heart = this.add.graphics();
     heart.fillStyle(0xff6b81, 1);
     
@@ -40,36 +45,51 @@ export default class TitleScene extends Phaser.Scene {
     heart.closePath();
     heart.fillPath();
     
-    // Add start button
-    const startButton = this.add.image(400, 450, 'button').setDisplaySize(200, 60);
-    const startText = this.add.text(400, 450, 'Start', {
+    // Add start button with soft style
+    const startButton = this.add.graphics();
+    startButton.fillStyle(0xff6b81, 1);
+    startButton.fillRoundedRect(300, 450, 200, 60, 20);
+    
+    // Add highlight to button
+    const buttonHighlight = this.add.graphics();
+    buttonHighlight.fillStyle(0xffffff, 0.3);
+    buttonHighlight.fillRoundedRect(300, 450, 200, 15, { tl: 20, tr: 20, bl: 0, br: 0 });
+    
+    const startText = this.add.text(400, 480, 'Start', {
       fontFamily: 'Arial',
       fontSize: '24px',
       color: '#ffffff'
     }).setOrigin(0.5);
     
     // Make button interactive
-    startButton.setInteractive({ useHandCursor: true });
+    const buttonZone = this.add.zone(400, 480, 200, 60).setOrigin(0.5);
+    buttonZone.setInteractive({ useHandCursor: true });
     
     // Add hover effect
-    startButton.on('pointerover', () => {
-      startButton.setTint(0xe05a70);
+    buttonZone.on('pointerover', () => {
+      startButton.clear();
+      startButton.fillStyle(0xe05a70, 1);
+      startButton.fillRoundedRect(300, 450, 200, 60, 20);
       startText.setScale(1.1);
     });
     
-    startButton.on('pointerout', () => {
-      startButton.clearTint();
+    buttonZone.on('pointerout', () => {
+      startButton.clear();
+      startButton.fillStyle(0xff6b81, 1);
+      startButton.fillRoundedRect(300, 450, 200, 60, 20);
       startText.setScale(1);
     });
     
     // Add click effect
-    startButton.on('pointerdown', () => {
-      startButton.setTint(0xd04060);
+    buttonZone.on('pointerdown', () => {
+      startButton.clear();
+      startButton.fillStyle(0xd04060, 1);
+      startButton.fillRoundedRect(300, 450, 200, 60, 20);
       startText.setScale(0.9);
     });
     
     // Start game on button release
-    startButton.on('pointerup', () => {
+    buttonZone.on('pointerup', () => {
       // Try to play click sound, but don't fail if it doesn't work
       try {
         this.sound.play('click');
@@ -118,6 +138,53 @@ export default class TitleScene extends Phaser.Scene {
       }
     } catch (error) {
       console.warn('Could not play background music:', error);
+    }
+  }
+  
+  addDecorativeElements() {
+    // Add some floating hearts
+    for (let i = 0; i < 15; i++) {
+      const x = Phaser.Math.Between(50, 750);
+      const y = Phaser.Math.Between(50, 550);
+      const size = Phaser.Math.Between(5, 15);
+      const alpha = Phaser.Math.FloatBetween(0.2, 0.5);
+      
+      const heart = this.add.graphics();
+      heart.fillStyle(0xff6b81, alpha);
+      
+      // Draw small heart
+      heart.beginPath();
+      heart.arc(x - size/4, y - size/4, size/2, 0, Math.PI, true);
+      heart.arc(x + size/4, y - size/4, size/2, 0, Math.PI, true);
+      heart.lineTo(x, y + size/2);
+      heart.closePath();
+      heart.fillPath();
+      
+      // Add floating animation
+      this.tweens.add({
+        targets: heart,
+        y: y - Phaser.Math.Between(20, 50),
+        duration: Phaser.Math.Between(2000, 5000),
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut',
+        delay: Phaser.Math.Between(0, 1000)
+      });
+    }
+    
+    // Add some soft circles in the background
+    for (let i = 0; i < 10; i++) {
+      const x = Phaser.Math.Between(0, 800);
+      const y = Phaser.Math.Between(0, 600);
+      const radius = Phaser.Math.Between(30, 100);
+      const alpha = Phaser.Math.FloatBetween(0.05, 0.1);
+      
+      const circle = this.add.graphics();
+      const colors = [0xffd1dc, 0xffb8c6, 0xc5a3ff, 0xa3d9ff];
+      const colorIndex = Phaser.Math.Between(0, colors.length - 1);
+      
+      circle.fillStyle(colors[colorIndex], alpha);
+      circle.fillCircle(x, y, radius);
     }
   }
 } 

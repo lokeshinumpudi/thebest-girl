@@ -187,44 +187,88 @@ function createGirlCharacter() {
 
 // Helper function to draw the girl character
 function drawGirl(ctx, x, y, mood) {
+  // Improved cute girl design
+  
   // Body (dress)
   ctx.fillStyle = '#ffb8c6';
   ctx.beginPath();
   ctx.moveTo(x - 40, y);
-  ctx.lineTo(x + 40, y);
-  ctx.lineTo(x + 50, y + 150);
-  ctx.lineTo(x - 50, y + 150);
+  ctx.quadraticCurveTo(x - 50, y + 75, x - 60, y + 150);
+  ctx.quadraticCurveTo(x, y + 160, x + 60, y + 150);
+  ctx.quadraticCurveTo(x + 50, y + 75, x + 40, y);
   ctx.closePath();
   ctx.fill();
   
-  // Head
+  // Add dress details - cute pattern
+  ctx.fillStyle = '#ffd1dc';
+  for (let i = 0; i < 5; i++) {
+    const patternX = x - 30 + i * 15;
+    const patternY = y + 100;
+    ctx.beginPath();
+    ctx.arc(patternX, patternY, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  
+  // Add a cute bow on dress
+  ctx.fillStyle = '#ff8fa2';
+  ctx.beginPath();
+  ctx.ellipse(x, y + 30, 15, 8, 0, 0, Math.PI * 2);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.moveTo(x, y + 30);
+  ctx.lineTo(x - 10, y + 20);
+  ctx.lineTo(x - 15, y + 30);
+  ctx.lineTo(x - 10, y + 40);
+  ctx.lineTo(x, y + 30);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.moveTo(x, y + 30);
+  ctx.lineTo(x + 10, y + 20);
+  ctx.lineTo(x + 15, y + 30);
+  ctx.lineTo(x + 10, y + 40);
+  ctx.lineTo(x, y + 30);
+  ctx.fill();
+  
+  // Head - make it rounder and cuter
   ctx.fillStyle = '#ffe0bd';
   ctx.beginPath();
-  ctx.arc(x, y - 60, 40, 0, Math.PI * 2);
+  ctx.arc(x, y - 60, 45, 0, Math.PI * 2);
   ctx.fill();
   
-  // Hair
+  // Hair - softer, more styled
   ctx.fillStyle = '#8b4513';
   ctx.beginPath();
-  ctx.arc(x, y - 70, 45, Math.PI, 0, true);
+  ctx.arc(x, y - 70, 50, Math.PI, 0, true);
   ctx.fill();
   
-  // Long hair strands
+  // Add hair bangs
   ctx.beginPath();
   ctx.moveTo(x - 45, y - 70);
-  ctx.quadraticCurveTo(x - 60, y, x - 40, y + 50);
-  ctx.lineTo(x - 30, y + 50);
+  ctx.quadraticCurveTo(x - 30, y - 100, x, y - 100);
+  ctx.quadraticCurveTo(x + 30, y - 100, x + 45, y - 70);
+  ctx.lineTo(x + 45, y - 70);
+  ctx.quadraticCurveTo(x + 30, y - 85, x, y - 85);
+  ctx.quadraticCurveTo(x - 30, y - 85, x - 45, y - 70);
+  ctx.fill();
+  
+  // Long hair strands - softer curves
+  ctx.beginPath();
+  ctx.moveTo(x - 45, y - 70);
+  ctx.quadraticCurveTo(x - 60, y, x - 40, y + 80);
+  ctx.lineTo(x - 30, y + 80);
   ctx.quadraticCurveTo(x - 50, y, x - 35, y - 70);
   ctx.fill();
   
   ctx.beginPath();
   ctx.moveTo(x + 45, y - 70);
-  ctx.quadraticCurveTo(x + 60, y, x + 40, y + 50);
-  ctx.lineTo(x + 30, y + 50);
+  ctx.quadraticCurveTo(x + 60, y, x + 40, y + 80);
+  ctx.lineTo(x + 30, y + 80);
   ctx.quadraticCurveTo(x + 50, y, x + 35, y - 70);
   ctx.fill();
   
-  // Arms
+  // Arms - more delicate
   ctx.fillStyle = '#ffe0bd';
   // Left arm
   ctx.beginPath();
@@ -242,7 +286,7 @@ function drawGirl(ctx, x, y, mood) {
   ctx.quadraticCurveTo(x + 50, y + 70, x + 30, y + 20);
   ctx.fill();
   
-  // Legs
+  // Legs - more stylized
   ctx.fillStyle = '#ffe0bd';
   // Left leg
   ctx.beginPath();
@@ -262,34 +306,118 @@ function drawGirl(ctx, x, y, mood) {
   ctx.closePath();
   ctx.fill();
   
-  // Face features
+  // Add cute shoes
+  ctx.fillStyle = '#ff8fa2';
+  ctx.beginPath();
+  ctx.ellipse(x - 20, y + 200, 15, 8, 0, 0, Math.PI * 2);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.ellipse(x + 20, y + 200, 15, 8, 0, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Face features - bigger, more anime-style eyes
   // Eyes
   ctx.fillStyle = '#000000';
-  ctx.beginPath();
-  ctx.arc(x - 15, y - 65, 5, 0, Math.PI * 2);
-  ctx.fill();
   
-  ctx.beginPath();
-  ctx.arc(x + 15, y - 65, 5, 0, Math.PI * 2);
-  ctx.fill();
-  
-  // Mouth based on mood
   if (mood === 'happy') {
-    // Happy mouth (smile)
+    // Happy eyes (bigger, sparkly)
     ctx.beginPath();
-    ctx.arc(x, y - 45, 15, 0, Math.PI);
-    ctx.stroke();
+    ctx.ellipse(x - 15, y - 65, 8, 12, 0, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.ellipse(x + 15, y - 65, 8, 12, 0, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Add eye highlights
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(x - 17, y - 68, 3, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.arc(x + 13, y - 68, 3, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Happy mouth (cute smile)
+    ctx.fillStyle = '#ff6b81';
+    ctx.beginPath();
+    ctx.arc(x, y - 40, 15, 0, Math.PI);
+    ctx.fill();
     
     // Blush
     ctx.fillStyle = 'rgba(255, 150, 150, 0.5)';
     ctx.beginPath();
-    ctx.arc(x - 25, y - 55, 8, 0, Math.PI * 2);
-    ctx.arc(x + 25, y - 55, 8, 0, Math.PI * 2);
+    ctx.arc(x - 25, y - 45, 10, 0, Math.PI * 2);
+    ctx.arc(x + 25, y - 45, 10, 0, Math.PI * 2);
     ctx.fill();
   } else {
-    // Sad mouth (frown)
+    // Sad eyes (downturned)
     ctx.beginPath();
-    ctx.arc(x, y - 35, 15, Math.PI, Math.PI * 2);
+    ctx.ellipse(x - 15, y - 65, 8, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.ellipse(x + 15, y - 65, 8, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Add eye highlights
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(x - 17, y - 68, 3, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.arc(x + 13, y - 68, 3, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Sad mouth (cute frown)
+    ctx.strokeStyle = '#ff6b81';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y - 35, 10, Math.PI, Math.PI * 2);
+    ctx.stroke();
+    
+    // Add a tear
+    ctx.fillStyle = 'rgba(150, 200, 255, 0.7)';
+    ctx.beginPath();
+    ctx.arc(x - 20, y - 55, 3, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Tear drop
+    ctx.beginPath();
+    ctx.moveTo(x - 20, y - 52);
+    ctx.quadraticCurveTo(x - 22, y - 45, x - 20, y - 40);
+    ctx.quadraticCurveTo(x - 18, y - 45, x - 20, y - 52);
+    ctx.fill();
+  }
+  
+  // Add cute eyebrows
+  ctx.strokeStyle = '#8b4513';
+  ctx.lineWidth = 2;
+  
+  if (mood === 'happy') {
+    // Happy eyebrows
+    ctx.beginPath();
+    ctx.moveTo(x - 25, y - 80);
+    ctx.quadraticCurveTo(x - 15, y - 85, x - 5, y - 80);
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(x + 25, y - 80);
+    ctx.quadraticCurveTo(x + 15, y - 85, x + 5, y - 80);
+    ctx.stroke();
+  } else {
+    // Sad eyebrows
+    ctx.beginPath();
+    ctx.moveTo(x - 25, y - 85);
+    ctx.quadraticCurveTo(x - 15, y - 80, x - 5, y - 85);
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(x + 25, y - 85);
+    ctx.quadraticCurveTo(x + 15, y - 80, x + 5, y - 85);
     ctx.stroke();
   }
 }
@@ -299,99 +427,170 @@ function createBoyCharacter() {
   const canvas = createCanvas(200, 400);
   const ctx = canvas.getContext('2d');
   
-  // Body (shirt)
+  // Improved cute boy design
+  const x = 100;
+  const y = 200;
+  
+  // Body (shirt) - more stylized
   ctx.fillStyle = '#a3d9ff';
   ctx.beginPath();
-  ctx.moveTo(100 - 40, 200);
-  ctx.lineTo(100 + 40, 200);
-  ctx.lineTo(100 + 45, 350);
-  ctx.lineTo(100 - 45, 350);
+  ctx.moveTo(x - 40, y);
+  ctx.quadraticCurveTo(x - 45, y + 75, x - 50, y + 150);
+  ctx.lineTo(x + 50, y + 150);
+  ctx.quadraticCurveTo(x + 45, y + 75, x + 40, y);
   ctx.closePath();
   ctx.fill();
   
-  // Head
+  // Add shirt details
+  ctx.fillStyle = '#7fc9ff';
+  ctx.beginPath();
+  ctx.moveTo(x - 10, y);
+  ctx.lineTo(x + 10, y);
+  ctx.lineTo(x + 10, y + 80);
+  ctx.lineTo(x - 10, y + 80);
+  ctx.closePath();
+  ctx.fill();
+  
+  // Add collar
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.moveTo(x - 20, y);
+  ctx.lineTo(x, y + 20);
+  ctx.lineTo(x + 20, y);
+  ctx.closePath();
+  ctx.fill();
+  
+  // Head - rounder, cuter
   ctx.fillStyle = '#ffe0bd';
   ctx.beginPath();
-  ctx.arc(100, 140, 40, 0, Math.PI * 2);
+  ctx.arc(x, y - 60, 45, 0, Math.PI * 2);
   ctx.fill();
   
-  // Hair
+  // Hair - more styled
   ctx.fillStyle = '#333333';
   ctx.beginPath();
-  ctx.arc(100, 130, 45, Math.PI, 0, true);
+  ctx.arc(x, y - 70, 50, Math.PI, 0, true);
   ctx.fill();
   
-  // Short hair details
+  // Add hair styling - cute messy look
   ctx.beginPath();
-  ctx.moveTo(60, 130);
-  ctx.lineTo(55, 150);
-  ctx.lineTo(65, 150);
-  ctx.closePath();
+  ctx.moveTo(x - 50, y - 70);
+  ctx.quadraticCurveTo(x - 30, y - 110, x, y - 110);
+  ctx.quadraticCurveTo(x + 30, y - 110, x + 50, y - 70);
+  ctx.lineTo(x + 50, y - 70);
+  ctx.quadraticCurveTo(x + 30, y - 95, x, y - 95);
+  ctx.quadraticCurveTo(x - 30, y - 95, x - 50, y - 70);
+  ctx.fill();
+  
+  // Add some hair spikes for style
+  ctx.beginPath();
+  ctx.moveTo(x - 20, y - 100);
+  ctx.lineTo(x - 15, y - 115);
+  ctx.lineTo(x - 10, y - 100);
   ctx.fill();
   
   ctx.beginPath();
-  ctx.moveTo(140, 130);
-  ctx.lineTo(145, 150);
-  ctx.lineTo(135, 150);
-  ctx.closePath();
+  ctx.moveTo(x + 10, y - 100);
+  ctx.lineTo(x + 15, y - 120);
+  ctx.lineTo(x + 20, y - 100);
   ctx.fill();
   
-  // Arms
+  // Arms - more defined
   ctx.fillStyle = '#ffe0bd';
   // Left arm
   ctx.beginPath();
-  ctx.moveTo(60, 220);
-  ctx.quadraticCurveTo(40, 270, 50, 300);
-  ctx.lineTo(60, 300);
-  ctx.quadraticCurveTo(50, 270, 70, 220);
+  ctx.moveTo(x - 40, y + 20);
+  ctx.quadraticCurveTo(x - 60, y + 70, x - 50, y + 100);
+  ctx.lineTo(x - 40, y + 100);
+  ctx.quadraticCurveTo(x - 50, y + 70, x - 30, y + 20);
   ctx.fill();
   
   // Right arm
   ctx.beginPath();
-  ctx.moveTo(140, 220);
-  ctx.quadraticCurveTo(160, 270, 150, 300);
-  ctx.lineTo(140, 300);
-  ctx.quadraticCurveTo(150, 270, 130, 220);
+  ctx.moveTo(x + 40, y + 20);
+  ctx.quadraticCurveTo(x + 60, y + 70, x + 50, y + 100);
+  ctx.lineTo(x + 40, y + 100);
+  ctx.quadraticCurveTo(x + 50, y + 70, x + 30, y + 20);
   ctx.fill();
   
-  // Pants
+  // Pants - more stylish
   ctx.fillStyle = '#5a7d9a';
-  ctx.fillRect(55, 350, 90, 20);
+  ctx.beginPath();
+  ctx.moveTo(x - 50, y + 150);
+  ctx.lineTo(x + 50, y + 150);
+  ctx.lineTo(x + 45, y + 170);
+  ctx.lineTo(x - 45, y + 170);
+  ctx.closePath();
+  ctx.fill();
   
   // Legs
   ctx.fillStyle = '#ffe0bd';
   // Left leg
   ctx.beginPath();
-  ctx.moveTo(70, 370);
-  ctx.lineTo(90, 370);
-  ctx.lineTo(95, 400);
-  ctx.lineTo(65, 400);
+  ctx.moveTo(x - 30, y + 170);
+  ctx.lineTo(x - 10, y + 170);
+  ctx.lineTo(x - 5, y + 200);
+  ctx.lineTo(x - 35, y + 200);
   ctx.closePath();
   ctx.fill();
   
   // Right leg
   ctx.beginPath();
-  ctx.moveTo(110, 370);
-  ctx.lineTo(130, 370);
-  ctx.lineTo(135, 400);
-  ctx.lineTo(105, 400);
+  ctx.moveTo(x + 30, y + 170);
+  ctx.lineTo(x + 10, y + 170);
+  ctx.lineTo(x + 5, y + 200);
+  ctx.lineTo(x + 35, y + 200);
   ctx.closePath();
   ctx.fill();
   
-  // Face features
+  // Add cute shoes
+  ctx.fillStyle = '#5a7d9a';
+  ctx.beginPath();
+  ctx.ellipse(x - 20, y + 200, 20, 8, 0, 0, Math.PI * 2);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.ellipse(x + 20, y + 200, 20, 8, 0, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Face features - bigger, more anime-style eyes
   // Eyes
   ctx.fillStyle = '#000000';
   ctx.beginPath();
-  ctx.arc(85, 135, 5, 0, Math.PI * 2);
+  ctx.ellipse(x - 15, y - 65, 8, 12, 0, 0, Math.PI * 2);
   ctx.fill();
   
   ctx.beginPath();
-  ctx.arc(115, 135, 5, 0, Math.PI * 2);
+  ctx.ellipse(x + 15, y - 65, 8, 12, 0, 0, Math.PI * 2);
   ctx.fill();
   
-  // Mouth (smile)
+  // Add eye highlights
+  ctx.fillStyle = '#ffffff';
   ctx.beginPath();
-  ctx.arc(100, 155, 15, 0, Math.PI);
+  ctx.arc(x - 17, y - 68, 3, 0, Math.PI * 2);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.arc(x + 13, y - 68, 3, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Mouth (cute smile)
+  ctx.fillStyle = '#ff6b81';
+  ctx.beginPath();
+  ctx.arc(x, y - 40, 10, 0, Math.PI);
+  ctx.fill();
+  
+  // Add cute eyebrows
+  ctx.strokeStyle = '#333333';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(x - 25, y - 80);
+  ctx.quadraticCurveTo(x - 15, y - 85, x - 5, y - 80);
+  ctx.stroke();
+  
+  ctx.beginPath();
+  ctx.moveTo(x + 25, y - 80);
+  ctx.quadraticCurveTo(x + 15, y - 85, x + 5, y - 80);
   ctx.stroke();
   
   saveCanvasAsPNG(canvas, 'boy.png');
@@ -702,6 +901,162 @@ function createButton() {
   saveCanvasAsPNG(canvas, 'button.png');
 }
 
+// Generate car for date scene
+function createCar() {
+  const canvas = createCanvas(300, 200);
+  const ctx = canvas.getContext('2d');
+  
+  // Car body
+  ctx.fillStyle = '#3498db';
+  ctx.beginPath();
+  ctx.moveTo(50, 120);
+  ctx.lineTo(50, 150);
+  ctx.lineTo(250, 150);
+  ctx.lineTo(250, 120);
+  ctx.quadraticCurveTo(220, 80, 180, 80);
+  ctx.lineTo(120, 80);
+  ctx.quadraticCurveTo(80, 80, 50, 120);
+  ctx.closePath();
+  ctx.fill();
+  
+  // Car windows
+  ctx.fillStyle = '#d5f5ff';
+  ctx.beginPath();
+  ctx.moveTo(120, 85);
+  ctx.lineTo(180, 85);
+  ctx.quadraticCurveTo(210, 85, 230, 120);
+  ctx.lineTo(70, 120);
+  ctx.quadraticCurveTo(90, 85, 120, 85);
+  ctx.closePath();
+  ctx.fill();
+  
+  // Car details - headlights
+  ctx.fillStyle = '#f1c40f';
+  ctx.beginPath();
+  ctx.arc(60, 130, 10, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Car details - taillights
+  ctx.fillStyle = '#e74c3c';
+  ctx.beginPath();
+  ctx.arc(240, 130, 10, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Car wheels
+  ctx.fillStyle = '#2c3e50';
+  ctx.beginPath();
+  ctx.arc(80, 150, 20, 0, Math.PI * 2);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.arc(220, 150, 20, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Wheel details
+  ctx.fillStyle = '#95a5a6';
+  ctx.beginPath();
+  ctx.arc(80, 150, 10, 0, Math.PI * 2);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.arc(220, 150, 10, 0, Math.PI * 2);
+  ctx.fill();
+  
+  saveCanvasAsPNG(canvas, 'car.png');
+}
+
+// Generate airport background
+function createAirportBackground() {
+  const canvas = createCanvas(800, 600);
+  const ctx = canvas.getContext('2d');
+  
+  // Sky gradient
+  const skyGradient = ctx.createLinearGradient(0, 0, 0, 400);
+  skyGradient.addColorStop(0, '#87ceeb');
+  skyGradient.addColorStop(1, '#e0f7ff');
+  ctx.fillStyle = skyGradient;
+  ctx.fillRect(0, 0, 800, 400);
+  
+  // Ground
+  ctx.fillStyle = '#8fc69f';
+  ctx.fillRect(0, 400, 800, 200);
+  
+  // Airport runway
+  ctx.fillStyle = '#555555';
+  ctx.fillRect(100, 350, 600, 100);
+  
+  // Runway markings
+  ctx.fillStyle = '#ffffff';
+  for (let i = 0; i < 10; i++) {
+    ctx.fillRect(150 + i * 60, 395, 30, 10);
+  }
+  
+  // Airport terminal building
+  ctx.fillStyle = '#dddddd';
+  ctx.fillRect(500, 250, 250, 150);
+  
+  // Terminal windows
+  ctx.fillStyle = '#a3d9ff';
+  for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 3; j++) {
+      ctx.fillRect(520 + i * 30, 270 + j * 40, 20, 30);
+    }
+  }
+  
+  // Control tower
+  ctx.fillStyle = '#bbbbbb';
+  ctx.fillRect(650, 150, 50, 100);
+  
+  // Control tower top
+  ctx.fillStyle = '#dddddd';
+  ctx.beginPath();
+  ctx.arc(675, 150, 30, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Clouds
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+  drawCloud(ctx, 100, 100, 80, 40);
+  drawCloud(ctx, 400, 70, 100, 50);
+  drawCloud(ctx, 700, 120, 90, 45);
+  
+  // Airplane
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.moveTo(200, 150);
+  ctx.lineTo(300, 150);
+  ctx.lineTo(320, 170);
+  ctx.lineTo(180, 170);
+  ctx.closePath();
+  ctx.fill();
+  
+  // Airplane wings
+  ctx.beginPath();
+  ctx.moveTo(220, 160);
+  ctx.lineTo(180, 200);
+  ctx.lineTo(200, 200);
+  ctx.lineTo(260, 160);
+  ctx.closePath();
+  ctx.fill();
+  
+  // Airplane tail
+  ctx.beginPath();
+  ctx.moveTo(300, 150);
+  ctx.lineTo(330, 120);
+  ctx.lineTo(320, 170);
+  ctx.closePath();
+  ctx.fill();
+  
+  // Airplane windows
+  ctx.fillStyle = '#a3d9ff';
+  for (let i = 0; i < 5; i++) {
+    ctx.beginPath();
+    ctx.arc(210 + i * 20, 160, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  
+  saveCanvasAsPNG(canvas, 'airport-bg.png');
+}
+
 // Generate all assets
 async function generateAllAssets() {
   console.log('Generating game assets...');
@@ -716,6 +1071,8 @@ async function generateAllAssets() {
   createVase();
   createDialogueBox();
   createButton();
+  createCar();
+  createAirportBackground();
   
   console.log('All assets generated successfully!');
 }

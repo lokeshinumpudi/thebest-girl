@@ -33,29 +33,34 @@ export default class PreloadScene extends Phaser.Scene {
       loadingText.destroy();
     });
     
-    // Load background
-    this.load.image('garden-bg', '/assets/images/garden-bg.png');
-    this.load.image('title-bg', '/assets/images/title-bg.png');
+    // Get the base path for assets (works in both dev and prod)
+    const basePath = './assets';
+    
+    // Load backgrounds
+    this.load.image('garden-bg', `${basePath}/images/garden-bg.png`);
+    this.load.image('title-bg', `${basePath}/images/title-bg.png`);
+    this.load.image('airport-bg', `${basePath}/images/airport-bg.png`);
     
     // Load character sprites
-    this.load.image('girl-sad', '/assets/images/girl-sad.png');
-    this.load.image('girl-happy', '/assets/images/girl-happy.png');
-    this.load.image('boy', '/assets/images/boy.png');
+    this.load.image('girl-sad', `${basePath}/images/girl-sad.png`);
+    this.load.image('girl-happy', `${basePath}/images/girl-happy.png`);
+    this.load.image('boy', `${basePath}/images/boy.png`);
     
     // Load interactive elements
-    this.load.image('bench', '/assets/images/bench.png');
-    this.load.image('flower', '/assets/images/flower.png');
-    this.load.image('fountain', '/assets/images/fountain.png');
-    this.load.image('vase', '/assets/images/vase.png');
+    this.load.image('bench', `${basePath}/images/bench.png`);
+    this.load.image('flower', `${basePath}/images/flower.png`);
+    this.load.image('fountain', `${basePath}/images/fountain.png`);
+    this.load.image('vase', `${basePath}/images/vase.png`);
+    this.load.image('car', `${basePath}/images/car.png`);
     
     // Load UI elements
-    this.load.image('dialogue-box', '/assets/images/dialogue-box.png');
-    this.load.image('button', '/assets/images/button.png');
+    this.load.image('dialogue-box', `${basePath}/images/dialogue-box.png`);
+    this.load.image('button', `${basePath}/images/button.png`);
     
     // Load audio (WAV instead of MP3)
-    this.load.audio('bg-music', '/assets/audio/bg-music.wav');
-    this.load.audio('click', '/assets/audio/click.wav');
-    this.load.audio('surprise', '/assets/audio/surprise.wav');
+    this.load.audio('bg-music', `${basePath}/audio/bg-music.wav`);
+    this.load.audio('click', `${basePath}/audio/click.wav`);
+    this.load.audio('surprise', `${basePath}/audio/surprise.wav`);
   }
 
   create() {
